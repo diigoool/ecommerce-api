@@ -59,7 +59,7 @@ func main() {
 	r := chi.NewRouter()
 	port := os.Getenv("PORT")
 	srv := &http.Server{
-		Addr:    port,
+		Addr:    ":" + port,
 		Handler: r,
 	}
 
