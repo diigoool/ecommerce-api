@@ -21,6 +21,18 @@ func TestLogin_Success(t *testing.T) {
 
 	SetupTestDB()
 
+	hashed, _ := bcrypt.GenerateFromPassword(
+		[]byte("user123"),
+		bcrypt.DefaultCost,
+	)
+
+	config.DB.Create(&models.User{
+		Username: "user",
+		Email:    "user@example.com",
+		Password: string(hashed),
+		Role:     "user",
+	})
+
 	repo := repositories.NewUserRepository(config.DB)
 
 	service := services.NewAuthService(repo)
@@ -96,18 +108,6 @@ func TestRegister_Success(t *testing.T) {
 func TestLogin_Failed(t *testing.T) {
 
 	SetupTestDB()
-
-	hashed, _ := bcrypt.GenerateFromPassword(
-		[]byte("user123"),
-		bcrypt.DefaultCost,
-	)
-
-	config.DB.Create(&models.User{
-		Username: "user",
-		Email:    "user@example.com",
-		Password: string(hashed),
-		Role:     "user",
-	})
 
 	repo := repositories.NewUserRepository(config.DB)
 
