@@ -7,25 +7,17 @@ import (
 	"ecommerce-api/repositories"
 	"ecommerce-api/services"
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestLogin_Success(t *testing.T) {
 
-	err := godotenv.Load("../.env")
-
-	if err != nil {
-		log.Println("No .env file found")
-	}
-
-	config.ConnectDB()
+	SetupTestDB()
 
 	repo := repositories.NewUserRepository(config.DB)
 
@@ -64,13 +56,7 @@ func TestRegister_Success(t *testing.T) {
 
 	config.DB.Exec("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
 
-	err := godotenv.Load("../.env")
-
-	if err != nil {
-		log.Println("No .env file found")
-	}
-
-	config.ConnectDB()
+	SetupTestDB()
 
 	repo := repositories.NewUserRepository(config.DB)
 
@@ -107,13 +93,7 @@ func TestRegister_Success(t *testing.T) {
 
 func TestLogin_Failed(t *testing.T) {
 
-	err := godotenv.Load("../.env")
-
-	if err != nil {
-		log.Println("No .env file found")
-	}
-
-	config.ConnectDB()
+	SetupTestDB()
 
 	repo := repositories.NewUserRepository(config.DB)
 
@@ -150,13 +130,7 @@ func TestLogin_Failed(t *testing.T) {
 
 func TestRegister_InvalidRegister(t *testing.T) {
 
-	err := godotenv.Load("../.env")
-
-	if err != nil {
-		log.Println("No .env file found")
-	}
-
-	config.ConnectDB()
+	SetupTestDB()
 
 	repo := repositories.NewUserRepository(config.DB)
 
