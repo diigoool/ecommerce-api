@@ -57,7 +57,7 @@ func main() {
 	orderHandler := handlers.NewOrderHandler(orderService)
 
 	r := chi.NewRouter()
-	port := ":3000"
+	port := os.Getenv("PORT")
 	srv := &http.Server{
 		Addr:    port,
 		Handler: r,
