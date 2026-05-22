@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"ecommerce-api/config"
+	_ "ecommerce-api/docs"
 	"ecommerce-api/handlers"
 	"ecommerce-api/middlewares"
 	"ecommerce-api/models"
@@ -17,8 +18,14 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+// @title Ecommerce API
+// @version 1.0
+// @description Ecommerce API with Golang Chi
+// @host localhost:3000
+// @BasePath /
 func main() {
 	config.LoadEnv()
 
@@ -89,6 +96,8 @@ func main() {
 		r.Get("/api/orders", orderHandler.GetOrders)
 
 	})
+
+	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	go func() {
 

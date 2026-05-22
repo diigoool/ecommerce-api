@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	"ecommerce-api/dto"
 	"ecommerce-api/services"
 	"ecommerce-api/utils"
-	"encoding/json"
 	"net/http"
 )
 
@@ -15,45 +15,95 @@ func NewAuthHandler(service *services.AuthService) *AuthHandler {
 	return &AuthHandler{Service: service}
 }
 
+// Register godoc
+// @Summary Register user
+// @Description register new user
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param request body dto.RegisterRequest true "Register Request"
+// @Success 201 {object} utils.APIResponse
+// @Failure 400 {object} utils.APIResponse
+// @Router /api/auth/register [post]
 func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 
-	var req struct {
-		Username string `json:"username"`
-		Email    string `json:"email"`
-		Password string `json:"password"`
-		Role     string `json:"role"`
-	}
+	var req dto.RegisterRequest
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.Error(w, http.StatusBadRequest, "INVALID_BODY", "invalid request")
+	if err := utils.DecodeJSON(w, r, &req); err != nil {
+		utils.RespondError(
+			w,
+			utils.NewBadRequestError("invalid request body"),
+		)
 		return
 	}
 
-	result, err := h.Service.Register(req.Username, req.Password, req.Email, req.Role)
+	if err := utils.Validate.Struct(req); err != nil {
+
+		errors := utils.FormatValidationError(err)
+
+		utils.RespondError(
+			w,
+			utils.NewValidationError(errors),
+		)
+		return
+	}
+
+	result, err := h.Service.Register(
+		req.Username,
+		req.Password,
+		req.Email,
+		req.Role,
+	)
 
 	if err != nil {
-		utils.Error(w, http.StatusBadRequest, "ERROR", err.Error())
+		utils.RespondError(w, err)
 		return
 	}
 
 	utils.JSON(w, http.StatusCreated, result)
 }
 
+// Login godoc
+// @Summary Login user
+// @Description login user and return jwt token
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param request body dto.LoginRequest true "Login Request"
+// @Success 200 {object} utils.APIResponse
+// @Failure 400 {object} utils.APIResponse
+// @Failure 401 {object} utils.APIResponse
+// @Router /api/auth/login [post]
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
-	var req struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		utils.Error(w, http.StatusBadRequest, "INVALID_BODY", "invalid request")
+	var req dto.LoginRequest
+
+	if err := utils.DecodeJSON(w, r, &req); err != nil {
+		utils.RespondError(
+			w,
+			utils.NewBadRequestError("invalid request body"),
+		)
 		return
 	}
 
-	token, err := h.Service.Login(req.Username, req.Password)
+	if err := utils.Validate.Struct(req); err != nil {
+
+		errors := utils.FormatValidationError(err)
+
+		utils.RespondError(
+			w,
+			utils.NewValidationError(errors),
+		)
+		return
+	}
+
+	token, err := h.Service.Login(
+		req.Username,
+		req.Password,
+	)
 
 	if err != nil {
-		utils.Error(w, http.StatusUnauthorized, "UNAUTHORIZED", err.Error())
+		utils.RespondError(w, err)
 		return
 	}
 
