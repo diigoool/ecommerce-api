@@ -1,5 +1,26 @@
 basePath: /
 definitions:
+  dto.AddToCartRequest:
+    properties:
+      product_id:
+        type: integer
+      qty:
+        type: integer
+    required:
+    - product_id
+    type: object
+  dto.CreateProductRequest:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      stock:
+        minimum: 0
+        type: integer
+    required:
+    - name
+    type: object
   dto.LoginRequest:
     properties:
       password:
@@ -26,6 +47,22 @@ definitions:
     - password
     - username
     type: object
+  dto.RemoveCartItemRequest:
+    properties:
+      product_id:
+        type: integer
+    required:
+    - product_id
+    type: object
+  dto.UpdateProductRequest:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      stock:
+        type: integer
+    type: object
   utils.APIResponse:
     properties:
       code:
@@ -41,7 +78,8 @@ definitions:
 host: localhost:3000
 info:
   contact: {}
-  description: Ecommerce API with Golang Chi
+  description: Ecommerce REST API built with Golang, Chi Router, PostgreSQL, JWT Authentication,
+    Docker, and Swagger Documentation
   title: Ecommerce API
   version: "1.0"
 paths:
@@ -101,4 +139,270 @@ paths:
       summary: Register user
       tags:
       - auth
+  /api/cart:
+    delete:
+      consumes:
+      - application/json
+      description: remove item
+      parameters:
+      - description: Remove Item
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RemoveCartItemRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: remove item
+      tags:
+      - cart
+    get:
+      description: get cart
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Get cart
+      tags:
+      - cart
+    post:
+      consumes:
+      - application/json
+      description: add to cart
+      parameters:
+      - description: Add To Cart
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddToCartRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Add to cart
+      tags:
+      - cart
+  /api/checkout:
+    post:
+      consumes:
+      - application/json
+      description: Checkout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Checkout
+      tags:
+      - orders
+  /api/orders:
+    get:
+      description: get orders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Get orders
+      tags:
+      - orders
+  /api/product:
+    get:
+      description: get all products
+      parameters:
+      - description: name search by name
+        in: query
+        name: q
+        type: string
+      - default: 10
+        description: limit
+        in: query
+        name: limit
+        type: integer
+      - default: 1
+        description: page
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all products
+      tags:
+      - products
+  /api/product/{id}:
+    get:
+      description: get product by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Product By Id
+      tags:
+      - products
+  /api/product/create:
+    post:
+      consumes:
+      - application/json
+      description: create new product
+      parameters:
+      - description: Create Product Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Create product
+      tags:
+      - products
+  /api/product/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete product
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete product
+      tags:
+      - products
+  /api/product/update/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: update product
+      parameters:
+      - description: Update Product Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateProductRequest'
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Update product
+      tags:
+      - products
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

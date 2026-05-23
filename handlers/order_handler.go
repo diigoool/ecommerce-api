@@ -15,6 +15,16 @@ func NewOrderHandler(s *services.OrderService) *OrderHandler {
 	return &OrderHandler{Service: s}
 }
 
+// Checkout godoc
+// @Summary Checkout
+// @Description Checkout
+// @Tags orders
+// @Security BearerAuth
+// @Produce json
+// @Accept json
+// @Success 200 {object} utils.APIResponse
+// @Failure 400 {object} utils.APIResponse
+// @Router /api/checkout [post]
 func (h *OrderHandler) Checkout(w http.ResponseWriter, r *http.Request) {
 
 	userID, ok := utils.GetUserID(r.Context())
@@ -27,16 +37,25 @@ func (h *OrderHandler) Checkout(w http.ResponseWriter, r *http.Request) {
 	order, err := h.Service.Checkout(userID)
 
 	if err != nil {
-		utils.RespondError(w, utils.NewBadRequestError("cart is empty"))
+		utils.RespondError(w, err)
 		return
 	}
 
 	response := mapper.ToOrderResponse(order)
 
-	utils.JSON(w, 200, response)
+	utils.JSON(w, http.StatusCreated, response)
 
 }
 
+// GetOrders godoc
+// @Summary Get orders
+// @Description get orders
+// @Tags orders
+// @Security BearerAuth
+// @Produce json
+// @Success 200 {object} utils.APIResponse
+// @Failure 400 {object} utils.APIResponse
+// @Router /api/orders [get]
 func (h *OrderHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 	userID, ok := utils.GetUserID(r.Context())
 

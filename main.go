@@ -23,9 +23,14 @@ import (
 
 // @title Ecommerce API
 // @version 1.0
-// @description Ecommerce API with Golang Chi
+// @description Ecommerce REST API built with Golang, Chi Router, PostgreSQL, JWT Authentication, Docker, and Swagger Documentation
 // @host localhost:3000
 // @BasePath /
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Type "Bearer" followed by a space and JWT token.
 func main() {
 	config.LoadEnv()
 
