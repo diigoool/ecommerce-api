@@ -85,16 +85,16 @@ func main() {
 		r.Use(middlewares.JWTAuth)
 
 		// routes product
-		r.Get("/api/product", productHandler.GetProducts)
-		r.Get("/api/product/{id}", productHandler.GetProductById)
-		r.Post("/api/product/create", middlewares.AdminOnly(productHandler.CreateProduct))
-		r.Delete("/api/product/delete/{id}", middlewares.AdminOnly(productHandler.DeleteProduct))
-		r.Patch("/api/product/update/{id}", middlewares.AdminOnly(productHandler.UpdateProduct))
+		r.Get("/api/products", productHandler.GetProducts)
+		r.Get("/api/products/{id}", productHandler.GetProductById)
+		r.Post("/api/products", middlewares.AdminOnly(productHandler.CreateProduct))
+		r.Delete("/api/products/{id}", middlewares.AdminOnly(productHandler.DeleteProduct))
+		r.Patch("/api/products/{id}", middlewares.AdminOnly(productHandler.UpdateProduct))
 
 		// routes cart
-		r.Post("/api/cart", cartHandler.AddToCart)
-		r.Get("/api/cart", cartHandler.GetCart)
-		r.Delete("/api/cart", cartHandler.RemoveItem)
+		r.Post("/api/carts", cartHandler.AddToCart)
+		r.Get("/api/carts", cartHandler.GetCart)
+		r.Delete("/api/carts", cartHandler.RemoveItem)
 
 		// routes order
 		r.Post("/api/checkout", orderHandler.Checkout)

@@ -95,7 +95,7 @@
                 }
             }
         },
-        "/api/cart": {
+        "/api/carts": {
             "get": {
                 "security": [
                     {
@@ -107,7 +107,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "cart"
+                    "carts"
                 ],
                 "summary": "Get cart",
                 "responses": {
@@ -139,7 +139,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "cart"
+                    "carts"
                 ],
                 "summary": "Add to cart",
                 "parameters": [
@@ -182,7 +182,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "cart"
+                    "carts"
                 ],
                 "summary": "remove item",
                 "parameters": [
@@ -277,7 +277,7 @@
                 }
             }
         },
-        "/api/product": {
+        "/api/products": {
             "get": {
                 "security": [
                     {
@@ -328,9 +328,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/api/product/create": {
+            },
             "post": {
                 "security": [
                     {
@@ -375,7 +373,45 @@
                 }
             }
         },
-        "/api/product/delete/{id}": {
+        "/api/products/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get product by id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Get Product By Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.APIResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.APIResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "security": [
                     {
@@ -416,9 +452,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/api/product/update/{id}": {
+            },
             "patch": {
                 "security": [
                     {
@@ -446,46 +480,6 @@
                             "$ref": "#/definitions/dto.UpdateProductRequest"
                         }
                     },
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/utils.APIResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/utils.APIResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/product/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "get product by id",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "products"
-                ],
-                "summary": "Get Product By Id",
-                "parameters": [
                     {
                         "type": "integer",
                         "description": "id",

@@ -19,14 +19,14 @@ func NewCartHandler(s *services.CartService) *CartHandler {
 // AddToCart godoc
 // @Summary Add to cart
 // @Description add to cart
-// @Tags cart
+// @Tags carts
 // @Security BearerAuth
 // @Produce json
 // @Accept json
 // @Param request body dto.AddToCartRequest true "Add To Cart"
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/cart [post]
+// @Router /api/carts [post]
 func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
 	userID, ok := utils.GetUserID(r.Context())
 
@@ -56,12 +56,12 @@ func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
 // GetCart godoc
 // @Summary Get cart
 // @Description get cart
-// @Tags cart
+// @Tags carts
 // @Security BearerAuth
 // @Produce json
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/cart [get]
+// @Router /api/carts [get]
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	userID, ok := utils.GetUserID(r.Context())
 
@@ -84,14 +84,14 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 // RemoveItem godoc
 // @Summary remove item
 // @Description remove item
-// @Tags cart
+// @Tags carts
 // @Security BearerAuth
 // @Produce json
 // @Accept json
 // @Param request body dto.RemoveCartItemRequest true "Remove Item"
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/cart [delete]
+// @Router /api/carts [delete]
 func (h *CartHandler) RemoveItem(w http.ResponseWriter, r *http.Request) {
 	userID, ok := utils.GetUserID(r.Context())
 

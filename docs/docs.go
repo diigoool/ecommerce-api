@@ -101,7 +101,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/cart": {
+        "/api/carts": {
             "get": {
                 "security": [
                     {
@@ -113,7 +113,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "cart"
+                    "carts"
                 ],
                 "summary": "Get cart",
                 "responses": {
@@ -145,7 +145,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "cart"
+                    "carts"
                 ],
                 "summary": "Add to cart",
                 "parameters": [
@@ -188,7 +188,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "cart"
+                    "carts"
                 ],
                 "summary": "remove item",
                 "parameters": [
@@ -283,7 +283,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/product": {
+        "/api/products": {
             "get": {
                 "security": [
                     {
@@ -334,9 +334,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/api/product/create": {
+            },
             "post": {
                 "security": [
                     {
@@ -381,7 +379,45 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/product/delete/{id}": {
+        "/api/products/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get product by id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Get Product By Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.APIResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.APIResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "security": [
                     {
@@ -422,9 +458,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/api/product/update/{id}": {
+            },
             "patch": {
                 "security": [
                     {
@@ -452,46 +486,6 @@ const docTemplate = `{
                             "$ref": "#/definitions/dto.UpdateProductRequest"
                         }
                     },
-                    {
-                        "type": "integer",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/utils.APIResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/utils.APIResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/product/{id}": {
-            "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
-                "description": "get product by id",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "products"
-                ],
-                "summary": "Get Product By Id",
-                "parameters": [
                     {
                         "type": "integer",
                         "description": "id",

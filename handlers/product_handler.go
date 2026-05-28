@@ -31,7 +31,7 @@ func NewProductHandler(service *services.ProductService) *ProductHandler {
 // @Param page query int false "page" default(1)
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/product [get]
+// @Router /api/products [get]
 func (h *ProductHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 
@@ -87,7 +87,7 @@ func (h *ProductHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
 // @Param id path uint true "id"
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/product/{id} [get]
+// @Router /api/products/{id} [get]
 func (h *ProductHandler) GetProductById(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 
@@ -121,7 +121,7 @@ func (h *ProductHandler) GetProductById(w http.ResponseWriter, r *http.Request) 
 // @Param request body dto.CreateProductRequest true "Create Product Request"
 // @Success 201 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/product/create [post]
+// @Router /api/products [post]
 func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var req dto.CreateProductRequest
 
@@ -163,7 +163,7 @@ func (h *ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 // @Param id path uint true "id"
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/product/delete/{id} [delete]
+// @Router /api/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	idInt, err := strconv.Atoi(idStr)
@@ -192,7 +192,7 @@ func (h *ProductHandler) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 // @Param id path uint true "id"
 // @Success 200 {object} utils.APIResponse
 // @Failure 400 {object} utils.APIResponse
-// @Router /api/product/update/{id} [patch]
+// @Router /api/products/{id} [patch]
 func (h *ProductHandler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 

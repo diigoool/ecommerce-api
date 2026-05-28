@@ -166,7 +166,7 @@ paths:
       summary: Register user
       tags:
       - auth
-  /api/cart:
+  /api/carts:
     delete:
       consumes:
       - application/json
@@ -193,7 +193,7 @@ paths:
       - BearerAuth: []
       summary: remove item
       tags:
-      - cart
+      - carts
     get:
       description: get cart
       produces:
@@ -211,7 +211,7 @@ paths:
       - BearerAuth: []
       summary: Get cart
       tags:
-      - cart
+      - carts
     post:
       consumes:
       - application/json
@@ -238,7 +238,7 @@ paths:
       - BearerAuth: []
       summary: Add to cart
       tags:
-      - cart
+      - carts
   /api/checkout:
     post:
       consumes:
@@ -279,7 +279,7 @@ paths:
       summary: Get orders
       tags:
       - orders
-  /api/product:
+  /api/products:
     get:
       description: get all products
       parameters:
@@ -313,32 +313,6 @@ paths:
       summary: Get all products
       tags:
       - products
-  /api/product/{id}:
-    get:
-      description: get product by id
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utils.APIResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utils.APIResponse'
-      security:
-      - BearerAuth: []
-      summary: Get Product By Id
-      tags:
-      - products
-  /api/product/create:
     post:
       consumes:
       - application/json
@@ -366,7 +340,7 @@ paths:
       summary: Create product
       tags:
       - products
-  /api/product/delete/{id}:
+  /api/products/{id}:
     delete:
       consumes:
       - application/json
@@ -393,7 +367,30 @@ paths:
       summary: Delete product
       tags:
       - products
-  /api/product/update/{id}:
+    get:
+      description: get product by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Get Product By Id
+      tags:
+      - products
     patch:
       consumes:
       - application/json
