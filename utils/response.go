@@ -6,8 +6,8 @@ import (
 )
 
 type APIResponse struct {
-	Success   bool   `json:"success"`
-	Message   string `json:"message,omitempty"`
+	Success   bool   `json:"success" example:"true"`
+	Message   string `json:"message,omitempty" example:"success"`
 	Code      string `json:"code,omitempty"`
 	Data      any    `json:"data,omitempty"`
 	RequestID string `json:"request_id,omitempty"`

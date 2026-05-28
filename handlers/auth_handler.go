@@ -22,7 +22,7 @@ func NewAuthHandler(service *services.AuthService) *AuthHandler {
 // @Accept json
 // @Produce json
 // @Param request body dto.RegisterRequest true "Register Request"
-// @Success 201 {object} utils.APIResponse
+// @Success 201 {object} dto.RegisterResponse
 // @Failure 400 {object} utils.APIResponse
 // @Router /api/auth/register [post]
 func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
@@ -52,7 +52,7 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 		req.Username,
 		req.Password,
 		req.Email,
-		req.Role,
+		"user",
 	)
 
 	if err != nil {
@@ -70,9 +70,9 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param request body dto.LoginRequest true "Login Request"
-// @Success 200 {object} utils.APIResponse
+// @Success 200 {object} dto.LoginResponse
 // @Failure 400 {object} utils.APIResponse
-// @Failure 401 {object} utils.APIResponse
+// @Failure 500 {object} utils.APIResponse
 // @Router /api/auth/login [post]
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 

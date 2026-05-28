@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.APIResponse"
+                            "$ref": "#/definitions/dto.LoginResponse"
                         }
                     },
                     "400": {
@@ -52,8 +52,8 @@ const docTemplate = `{
                             "$ref": "#/definitions/utils.APIResponse"
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
+                    "500": {
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/utils.APIResponse"
                         }
@@ -89,7 +89,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/utils.APIResponse"
+                            "$ref": "#/definitions/dto.RegisterResponse"
                         }
                     },
                     "400": {
@@ -525,10 +525,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "product_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "qty": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 10
                 }
             }
         },
@@ -539,14 +541,17 @@ const docTemplate = `{
             ],
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Gaming Laptop"
                 },
                 "price": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 15000000
                 },
                 "stock": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "example": 10
                 }
             }
         },
@@ -565,6 +570,15 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiSm9obmRvZSIsImV4cCI6MTc4MDAzMzIyMX0.Da9lgarVgBNxa-ET7obQTVvlCPLReyHlFQV5XBF5Fmk"
+                }
+            }
+        },
         "dto.RegisterRequest": {
             "type": "object",
             "required": [
@@ -580,11 +594,29 @@ const docTemplate = `{
                     "type": "string",
                     "minLength": 6
                 },
-                "role": {
-                    "type": "string"
-                },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.RegisterResponse": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "johndoe@example.com"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "1"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "user"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "Johndoe"
                 }
             }
         },
@@ -595,7 +627,8 @@ const docTemplate = `{
             ],
             "properties": {
                 "product_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 2
                 }
             }
         },
@@ -621,13 +654,15 @@ const docTemplate = `{
                 },
                 "data": {},
                 "message": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "success"
                 },
                 "request_id": {
                     "type": "string"
                 },
                 "success": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "example": true
                 }
             }
         }
